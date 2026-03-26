@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PR Rodrigues Film | Automação Completa de Vendas</title>
+  <meta name="description" content="Site com automação de leads, distribuição de atendimento, painel CRM e integração opcional com Google Sheets." />
+  <style>
+    :root{
+      --bg:#070709;
+      --card:#131318;
+      --card2:#181820;
+      --text:#f4f4f7;
+      --muted:#b6b6c4;
+      --line:rgba(255,255,255,.08);
+      --red:#be0f18;
+      --red2:#ff3943;
+      --green:#10b981;
+      --warn:#f59e0b;
+      --radius:24px;
+      --shadow:0 18px 60px rgba(0,0,0,.55);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:
+      radial-gradient(900px 600px at 10% -10%, rgba(190,15,24,.30), transparent 60%),
+      radial-gradient(700px 500px at 100% 0%, rgba(255,57,67,.12), transparent 60%),
+      linear-gradient(180deg, #040405, #09090c 65%, #050507);
+      color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100%}
+    a{text-decoration:none;color:inherit}
+    .wrap{width:min(1120px,92vw);margin:0 auto;padding:26px 0 54px}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+    .chip{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.04);backdrop-filter:blur(8px)}
+    .hero{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:34px;background:linear-gradient(180deg, rgba(20,20,28,.92), rgba(12,12,16,.88));box-shadow:var(--shadow)}
+    .hero:before{content:"";position:absolute;inset:-180px -160px auto auto;width:360px;height:360px;background:radial-gradient(circle at 30% 30%, rgba(255,57,67,.25), rgba(190,15,24,.08), transparent 70%)}
+    .heroIn{position:relative;z-index:1;padding:24px}
+    .head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start}
+    .brand{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+    .logoBox{width:88px;height:88px;border-radius:24px;display:grid;place-items:center;background:radial-gradient(circle at 30% 30%, rgba(255,57,67,.15), rgba(190,15,24,.10), rgba(0,0,0,.3));border:1px solid rgba(255,57,67,.35);font-size:28px;font-weight:900;letter-spacing:.08em;user-select:none;cursor:pointer}
+    .titles small{display:block;color:var(--muted);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:11px;margin-bottom:6px}
+    h1{margin:0;font-size:clamp(28px,4vw,42px);line-height:1.03}
+    .sub{margin-top:6px;color:var(--muted)}
+    .loc{padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);font-weight:700}
+    .phrase{margin:16px 0;padding:14px 16px;border-left:4px solid var(--red);background:rgba(255,255,255,.03);border-radius:16px}
+    .phrase strong{display:block;font-size:16px}
+    .phrase span{display:block;margin-top:6px;color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+    @media (max-width:920px){.grid{grid-template-columns:1fr}}
+    .card{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg, rgba(24,24,32,.92), rgba(14,14,18,.92));padding:16px}
+    .card h2{margin:0 0 10px;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+    .benefits{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media (max-width:560px){.benefits{grid-template-columns:1fr}}
+    .benefit{display:flex;gap:10px;padding:12px;border-radius:18px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03)}
+    .ico{width:36px;height:36px;display:grid;place-items:center;border-radius:14px;background:radial-gradient(circle at 30% 30%, rgba(255,57,67,.24), rgba(190,15,24,.14), rgba(0,0,0,.25));border:1px solid rgba(255,57,67,.26)}
+    .benefit b{display:block;font-size:13px;margin-bottom:2px}
+    .benefit p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.28}
+    .trust{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.pill{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:12px;color:var(--muted)}
+    .cta{display:flex;flex-direction:column;gap:10px}
+    .btn{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  padding:15px 16px;
+  border-radius:20px;
+  border:1px solid rgba(255,57,67,.4);
+  background:linear-gradient(180deg, rgba(255,57,67,.18), rgba(0,0,0,.25));
+  transition:.2s ease;
+  cursor:pointer;
+}
+    .btn:hover{
+  transform:translateY(-2px);
+  border-color:rgba(255,57,67,.8);
+  background:linear-gradient(180deg, rgba(255,57,67,.28), rgba(0,0,0,.25));
+}
+    .btn strong{font-size:14px}.btn small{color:var(--muted)}
+    .go{width:38px;height:38px;border-radius:14px;display:grid;place-items:center;border:1px solid rgba(255,57,67,.22);background:linear-gradient(180deg, rgba(255,57,67,.12), rgba(0,0,0,.18))}
+    .btn-premium{
+  border:1px solid rgba(255,57,67,.6);
+  background:linear-gradient(180deg, rgba(255,57,67,.25), rgba(0,0,0,.3));
+  box-shadow:0 0 18px rgba(255,57,67,.25);
+}
+    .btn-premium:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 20%, rgba(255,255,255,.10), transparent 60%);pointer-events:none}
+    .btn-premium:hover{box-shadow:0 18px 60px rgba(0,0,0,.72);border-color:rgba(255,255,255,.22)}
+    .sectionTitle{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:16px;margin-bottom:10px}
+    .muted{color:var(--muted)}
+    .miniActions{display:flex;gap:8px;flex-wrap:wrap}.miniBtn{padding:10px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);cursor:pointer;color:var(--text)}
+    .miniBtn:hover{background:rgba(255,255,255,.06)}
+    .float{position:fixed;right:16px;bottom:16px;z-index:20;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:999px;background:rgba(14,14,18,.82);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow)}
+    .float .w{
+  background: radial-gradient(circle at 30% 30%, rgba(255,57,67,.35), rgba(190,15,24,.25), rgba(0,0,0,.35));
+  border:1px solid rgba(255,57,67,.5);
+}
+    .overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.70);backdrop-filter:blur(8px);z-index:1000}
+    .overlay.active{display:flex}
+    .modal{width:min(560px,95vw);border-radius:30px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg, rgba(24,24,32,.96), rgba(10,10,14,.96));box-shadow:0 30px 100px rgba(0,0,0,.8);padding:20px}
+    .modal h3{margin:0 0 6px;font-size:24px}
+    .modal p{margin:0 0 14px;color:var(--muted)}
+    .closeX{margin-left:auto;width:38px;height:38px;border-radius:14px;border:1px solid rgba(255,255,255,.10);display:grid;place-items:center;cursor:pointer;background:rgba(255,255,255,.03)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media (max-width:720px){.row{grid-template-columns:1fr}}
+    label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
+    input,select,textarea{width:100%;padding:13px 14px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);color:var(--text);outline:none}
+    textarea{min-height:92px;resize:vertical}
+    .submit{width:100%;padding:15px 16px;border-radius:18px;border:1px solid rgba(255,57,67,.30);background:linear-gradient(180deg, rgba(255,57,67,.18), rgba(0,0,0,.18));color:#fff;font-weight:800;cursor:pointer}
+    .loaderBox{text-align:center;padding:10px 0 4px}.loader{width:50px;height:50px;border-radius:50%;margin:0 auto 12px;border:2px solid rgba(255,255,255,.14);border-top-color:var(--red2);animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+    .dashboard{display:none;margin-top:18px}.dashboard.active{display:block}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    @media (max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:520px){.stats{grid-template-columns:1fr}}
+    .stat{padding:16px;border-radius:22px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02))}
+    .stat span{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
+    .stat strong{font-size:30px;line-height:1}
+    .dashGrid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:16px}
+    @media (max-width:920px){.dashGrid{grid-template-columns:1fr}}
+    .list{display:grid;gap:10px}
+    .leadItem{border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px;background:rgba(255,255,255,.03)}
+    .leadTop{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+    .badge{padding:7px 9px;border-radius:999px;font-size:11px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05)}
+    .badge.new{border-color:rgba(245,158,11,.25);color:#f5c56d}
+    .badge.progress{border-color:rgba(59,130,246,.25);color:#93c5fd}
+    .badge.closed{border-color:rgba(16,185,129,.25);color:#6ee7b7}
+    .badge.lost{border-color:rgba(239,68,68,.25);color:#fda4af}
+    .leadMeta{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;color:var(--muted);font-size:12.5px;margin-bottom:10px}
+    @media (max-width:620px){.leadMeta{grid-template-columns:1fr}}
+    .controls{display:grid;grid-template-columns:1.1fr .7fr .7fr auto;gap:8px;align-items:end}
+    @media (max-width:760px){.controls{grid-template-columns:1fr}}
+    .empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed rgba(255,255,255,.12);border-radius:20px}
+    table{width:100%;border-collapse:collapse} th,td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;font-size:13px} th{color:var(--muted);font-weight:600}
+    .configBox{display:grid;gap:10px;margin-top:12px}
+    .hidden{display:none !important}
+    .progressWrap{margin-top:10px}.progressBar{height:12px;background:rgba(255,255,255,.06);border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.07)}.progressFill{height:100%;background:linear-gradient(90deg, var(--red), var(--red2));width:0%}
+    .tiny{font-size:12px;color:var(--muted)}
+    .line{height:1px;background:linear-gradient(90deg, transparent, rgba(255,57,67,.45), transparent);margin:14px 0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      
+      <a class="chip" href="https://instagram.com/pr_rodrigues_film" target="_blank" rel="noopener">📸 @pr_rodrigues_film</a>
+    </div>
+
+    <section class="hero">
+      <div class="heroIn">
+        <div class="head">
+          <div class="brand">
+            <div class="logoBox" id="logoSecret" title="Clique 5x para abrir o CRM">PR</div>
+            <div class="titles">
+              <small>Películas Premium • Controle Solar • PPF</small>
+              <h1>PR RODRIGUES FILM</h1>
+              <div class="sub">+10 anos de experiência • Equipe 100% feminina • Acabamento premium</div>
+            </div>
+          </div>
+          <div class="loc">📍 Gravataí / RS</div>
+        </div>
+
+        <div class="phrase">
+          <strong>Protegendo com estilo, refletindo com confiança.</strong>
+          <span>Películas certificadas com instalação profissional e acabamento premium.</span>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h2>Benefícios</h2>
+            <div class="benefits">
+              <div class="benefit"><div class="ico">🛡️</div><div><b>Garantia</b><p>Segurança e suporte na sua película.</p></div></div>
+              <div class="benefit"><div class="ico">🌡️</div><div><b>Redução de calor</b><p>Conforto térmico no dia a dia.</p></div></div>
+              <div class="benefit"><div class="ico">☀️</div><div><b>Proteção UV</b><p>Ajuda a proteger pele e interior.</p></div></div>
+              <div class="benefit"><div class="ico">🔒</div><div><b>Anti-estilhaço</b><p>Mais segurança em caso de impacto.</p></div></div>
+              <div class="benefit"><div class="ico">👁️</div><div><b>Melhor visibilidade</b><p>Conforto visual e direção segura.</p></div></div>
+              <div class="benefit"><div class="ico">✨</div><div><b>Acabamento premium</b><p>Instalação cuidadosa e estética limpa.</p></div></div>
+            </div>
+            <div class="trust">
+              <div class="pill">✔️ +10 anos de experiência</div>
+              <div class="pill">✔️ Atendimento profissional</div>
+              <div class="pill">✔️ Equipe feminina</div>
+              
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Orçamentos</h2>
+            <div class="cta">
+              <a class="btn" href="https://wa.me/5551991205802?text=Olá!%20Quero%20orçamento%20automotivo." target="_blank" rel="noopener"><div><strong>ORÇAMENTO AUTOMOTIVO</strong><br><small>Carros • SUVs • Vans • Frotas</small></div><div class="go">›</div></a>
+              <a class="btn" href="https://wa.me/5551991205802?text=Olá!%20Quero%20orçamento%20residencial%20ou%20comercial." target="_blank" rel="noopener"><div><strong>RESIDENCIAL / COMERCIAL</strong><br><small>Conforto térmico e privacidade</small></div><div class="go">›</div></a>
+              <a class="btn" href="https://wa.me/5551991205802?text=Olá!%20Quero%20orçamento%20de%20PPF." target="_blank" rel="noopener"><div><strong>PPF – PROTEÇÃO DE PINTURA</strong><br><small>Proteção premium para estética</small></div><div class="go">›</div></a>
+              <button class="btn btn-premium" id="btnEquipe" type="button">
+                <div><strong>Fale com uma especialista</strong><br><small>Atendimento rápido e personalizado</small></div>
+                <div class="go">→</div>
+              </button>
+              <a class="btn" href="https://instagram.com/pr_rodrigues_film" target="_blank" rel="noopener"><div><strong>Ver trabalhos no Instagram</strong><br><small>Antes/depois e provas sociais</small></div><div class="go">📸</div></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard" id="dashboard">
+          <div class="sectionTitle">
+            <div>
+              <h2 style="margin:0">CRM Interno</h2>
+              <div class="tiny">Clique 5x no logo PR para abrir/fechar. Senha padrão: <b>PR2026CRM</b>.</div>
+            </div>
+            <div class="miniActions">
+              <button class="miniBtn" id="btnExport">Exportar JSON</button>
+              <label class="miniBtn" for="importFile" style="cursor:pointer">Importar JSON</label>
+              <input id="importFile" type="file" accept="application/json" class="hidden">
+              <button class="miniBtn" id="btnClearAll">Limpar tudo</button>
+            </div>
+          </div>
+
+          <div class="stats" id="stats"></div>
+
+          <div class="dashGrid">
+            <div class="card">
+              <div class="sectionTitle"><h2 style="margin:0">Leads</h2><span class="tiny" id="leadCountInfo"></span></div>
+              <div class="list" id="leadList"></div>
+            </div>
+            <div class="card">
+              <h2>Resumo da equipe</h2>
+              <table>
+                <thead>
+                  <tr><th>Especialista</th><th>Leads</th><th>Fechados</th><th>Faturamento</th><th>Comissão 5%</th></tr>
+                </thead>
+                <tbody id="teamTable"></tbody>
+              </table>
+              <div class="line"></div>
+              <h2>Configurações</h2>
+              <div class="configBox">
+                <div>
+                  <label>Webhook Google Sheets (opcional)</label>
+                  <input id="webhookInput" placeholder="Cole aqui seu link .../exec" />
+                </div>
+                <div class="row">
+                  <div>
+                    <label>Meta mensal (R$)</label>
+                    <input id="metaInput" type="number" min="0" step="0.01" placeholder="14000" />
+                  </div>
+                  <div>
+                    <label>Senha do CRM</label>
+                    <input id="passwordInput" placeholder="PR2026CRM" />
+                  </div>
+                </div>
+                <button class="submit" id="saveConfig" type="button">Salvar configurações</button>
+                <div class="tiny">Sem webhook, os leads ficam salvos só neste navegador. Com webhook, também envia para sua planilha online.</div>
+                <div class="progressWrap">
+                  <div class="tiny" id="metaInfo">Meta mensal</div>
+                  <div class="progressBar"><div class="progressFill" id="metaFill"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <button class="float" id="floatWpp" type="button">
+    <div class="w">🟢</div>
+    <div><strong>Chamar no WhatsApp</strong><br><small>Orçamento rápido</small></div>
+  </button>
+
+  <div class="overlay" id="leadOverlay">
+    <div class="modal" id="leadModal">
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
+        <div>
+          <h3>Fale com uma especialista</h3>
+          <p>Preencha rápido para abrir o WhatsApp e registrar seu lead.</p>
+        </div>
+        <button class="closeX" id="closeLead" type="button">✕</button>
+      </div>
+      <form id="leadForm">
+        <div class="row">
+          <div><label>Nome</label><input required id="nome" placeholder="Seu nome" /></div>
+          <div><label>Telefone / WhatsApp</label><input required id="telefone" placeholder="51999999999" /></div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Serviço</label>
+            <select id="servico">
+              <option>Película Automotiva</option>
+              <option>Residencial / Comercial</option>
+              <option>PPF</option>
+              <option>Orçamento Geral</option>
+            </select>
+          </div>
+          <div><label>Veículo / ambiente</label><input id="modelo" placeholder="Ex: BYD Song / Sala comercial" /></div>
+        </div>
+        <div class="row">
+          <div><label>Quando deseja instalar?</label>
+            <select id="quando">
+              <option>Hoje / amanhã</option>
+              <option>Essa semana</option>
+              <option>Próxima semana</option>
+              <option>Só pesquisando valores</option>
+            </select>
+          </div>
+          <div><label>Origem</label><input id="origem" value="Site PR Rodrigues Film" /></div>
+        </div>
+        <div><label>Detalhes</label><textarea id="detalhes" placeholder="Ex: tonalidade, modelo do carro, medidas, preferência de película..."></textarea></div>
+        <button class="submit" type="submit">Continuar para o WhatsApp</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="overlay" id="loadingOverlay">
+    <div class="modal" style="max-width:340px;text-align:center">
+      <div class="loaderBox"><div class="loader"></div></div>
+      <h3 id="statusText">Conectando com especialista...</h3>
+      <p>Aguarde um instante</p>
+    </div>
+  </div>
+
+  <div class="overlay" id="loginOverlay">
+    <div class="modal" style="max-width:380px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px">
+        <div><h3 style="font-size:22px">Entrar no CRM</h3><p>Área interna de vendas</p></div>
+        <button class="closeX" id="closeLogin" type="button">✕</button>
+      </div>
+      <div>
+        <label>Senha</label>
+        <input id="crmPass" type="password" placeholder="Digite a senha" />
+      </div>
+      <button class="submit" id="loginBtn" type="button" style="margin-top:12px">Abrir painel</button>
+    </div>
+  </div>
+
+<script>
+(function(){
+  const STORAGE_KEY = 'prrf_leads_v2';
+  const CONFIG_KEY = 'prrf_config_v2';
+
+  const defaultConfig = {
+    webhook: '',
+    crmPassword: 'PR2026CRM',
+    metaMensal: 14000,
+    comissao: 0.05,
+    equipe: [
+      { nome:'Kellen', numero:'5551991205802' },
+      { nome:'Kevellen', numero:'5551994381252' },
+      { nome:'Paloma', numero:'5551994311608' }
+    ]
+  };
+
+  const $ = (id)=>document.getElementById(id);
+  const readConfig = ()=>{
+    try { return { ...defaultConfig, ...(JSON.parse(localStorage.getItem(CONFIG_KEY))||{}) }; }
+    catch { return { ...defaultConfig }; }
+  };
+  const saveConfigData = (cfg)=> localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
+  const readLeads = ()=>{
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch { return []; }
+  };
+  const saveLeads = (arr)=> localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+  const money = (v)=> Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+  const todayStr = ()=> new Date().toISOString().slice(0,10);
+  const uid = ()=> 'L' + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+  const escapeHtml = (s='') => String(s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+
+  let config = readConfig();
+  let leads = readLeads();
+  let logoClicks = 0;
+  let lastClickTime = 0;
+
+  function persist(){ saveLeads(leads); }
+
+  function sendToWebhook(lead){
+    if(!config.webhook || !/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(config.webhook)) return;
+    const payload = {
+      data: lead.data,
+      nome: lead.nome,
+      telefone: lead.telefone,
+      servico: lead.servico,
+      atendente: lead.atendente,
+      origem: lead.origem,
+      status: lead.status,
+      valor: lead.valor,
+      modelo: lead.modelo,
+      quando: lead.quando,
+      detalhes: lead.detalhes
+    };
+    try {
+      fetch(config.webhook, {
+        method:'POST',
+        mode:'no-cors',
+        headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(()=>{});
+    } catch {}
+  }
+
+  function chooseSpecialist(){
+    return config.equipe[Math.floor(Math.random()*config.equipe.length)];
+  }
+
+  function addLead(lead){
+    leads.unshift(lead);
+    persist();
+    renderDashboard();
+    sendToWebhook(lead);
+  }
+
+  function statusClass(status){
+    if(status === 'Fechado') return 'closed';
+    if(status === 'Em atendimento') return 'progress';
+    if(status === 'Perdido') return 'lost';
+    return 'new';
+  }
+
+  function statsHtml(){
+    const total = leads.length;
+    const hoje = leads.filter(l => (l.data||'').slice(0,10) === todayStr()).length;
+    const fechados = leads.filter(l => l.status === 'Fechado');
+    const faturamento = fechados.reduce((acc,l)=>acc+Number(l.valor||0),0);
+    const ticket = fechados.length ? faturamento/fechados.length : 0;
+    return [
+      ['Total de leads', total],
+      ['Leads hoje', hoje],
+      ['Vendas fechadas', fechados.length],
+      ['Faturamento', money(faturamento)],
+      ['Ticket médio', money(ticket)],
+      ['Meta mensal', money(config.metaMensal||0)]
+    ].map(([t,v])=>`<div class="stat"><span>${t}</span><strong>${v}</strong></div>`).join('');
+  }
+
+  function renderTeam(){
+    const tbody = $('teamTable');
+    const rows = config.equipe.map(p => {
+      const mine = leads.filter(l => l.atendente === p.nome);
+      const closed = mine.filter(l => l.status === 'Fechado');
+      const fat = closed.reduce((a,l)=>a+Number(l.valor||0),0);
+      const com = fat * Number(config.comissao || .05);
+      return `<tr><td>${p.nome}</td><td>${mine.length}</td><td>${closed.length}</td><td>${money(fat)}</td><td>${money(com)}</td></tr>`;
+    }).join('');
+    tbody.innerHTML = rows || `<tr><td colspan="5" class="muted">Sem dados ainda.</td></tr>`;
+  }
+
+  function renderLeadList(){
+    const wrap = $('leadList');
+    $('leadCountInfo').textContent = `${leads.length} lead(s)`;
+    if(!leads.length){
+      wrap.innerHTML = '<div class="empty">Nenhum lead ainda. Quando o cliente clicar em “Fale com uma especialista”, ele entra aqui automaticamente.</div>';
+      return;
+    }
+    wrap.innerHTML = leads.map(lead => `
+      <div class="leadItem">
+        <div class="leadTop">
+          <div><strong>${escapeHtml(lead.nome || 'Cliente')}</strong><div class="tiny">${escapeHtml(lead.servico || '')}</div></div>
+          <span class="badge ${statusClass(lead.status)}">${escapeHtml(lead.status || 'Novo Lead')}</span>
+        </div>
+        <div class="leadMeta">
+          <div>📞 ${escapeHtml(lead.telefone || '-')}</div>
+          <div>👩 ${escapeHtml(lead.atendente || '-')}</div>
+          <div>📍 ${escapeHtml(lead.origem || '-')}</div>
+          <div>🗓️ ${new Date(lead.data).toLocaleString('pt-BR')}</div>
+          <div>🚗 ${escapeHtml(lead.modelo || '-')}</div>
+          <div>⏱️ ${escapeHtml(lead.quando || '-')}</div>
+        </div>
+        <div class="tiny" style="margin-bottom:10px">${escapeHtml(lead.detalhes || 'Sem detalhes.')}</div>
+        <div class="controls">
+          <div>
+            <label>Status</label>
+            <select data-action="status" data-id="${lead.id}">
+              <option ${lead.status==='Novo Lead'?'selected':''}>Novo Lead</option>
+              <option ${lead.status==='Em atendimento'?'selected':''}>Em atendimento</option>
+              <option ${lead.status==='Fechado'?'selected':''}>Fechado</option>
+              <option ${lead.status==='Perdido'?'selected':''}>Perdido</option>
+            </select>
+          </div>
+          <div>
+            <label>Valor (R$)</label>
+            <input data-action="valor" data-id="${lead.id}" type="number" min="0" step="0.01" value="${lead.valor || ''}">
+          </div>
+          <div>
+            <label>Especialista</label>
+            <select data-action="atendente" data-id="${lead.id}">
+              ${config.equipe.map(p => `<option ${lead.atendente===p.nome?'selected':''}>${p.nome}</option>`).join('')}
+            </select>
+          </div>
+          <button class="miniBtn" data-action="delete" data-id="${lead.id}" type="button">Excluir</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function renderMeta(){
+    const fechados = leads.filter(l => l.status === 'Fechado');
+    const faturamento = fechados.reduce((acc,l)=>acc+Number(l.valor||0),0);
+    const meta = Number(config.metaMensal || 0);
+    const pct = meta > 0 ? Math.min(100, (faturamento/meta)*100) : 0;
+    $('metaFill').style.width = pct + '%';
+    $('metaInfo').textContent = `Meta mensal: ${money(meta)} • Atual: ${money(faturamento)} • ${pct.toFixed(1)}%`;
+  }
+
+  function renderDashboard(){
+    $('stats').innerHTML = statsHtml();
+    renderLeadList();
+    renderTeam();
+    renderMeta();
+    $('webhookInput').value = config.webhook || '';
+    $('metaInput').value = config.metaMensal || '';
+    $('passwordInput').value = config.crmPassword || '';
+  }
+
+  function openLeadOverlay(){ $('leadOverlay').classList.add('active'); }
+  function closeLeadOverlay(){ $('leadOverlay').classList.remove('active'); }
+  function openLoading(name){ $('statusText').textContent = `Conectando com ${name}...`; $('loadingOverlay').classList.add('active'); }
+  function closeLoading(){ $('loadingOverlay').classList.remove('active'); }
+  function openLogin(){ $('loginOverlay').classList.add('active'); $('crmPass').value=''; }
+  function closeLogin(){ $('loginOverlay').classList.remove('active'); }
+
+  function toggleDashboard(force){
+    const el = $('dashboard');
+    const shouldOpen = typeof force === 'boolean' ? force : !el.classList.contains('active');
+    el.classList.toggle('active', shouldOpen);
+    renderDashboard();
+    if(shouldOpen) window.scrollTo({top: document.body.scrollHeight, behavior:'smooth'});
+  }
+
+  $('btnEquipe').addEventListener('click', openLeadOverlay);
+  $('floatWpp').addEventListener('click', openLeadOverlay);
+  $('closeLead').addEventListener('click', closeLeadOverlay);
+  $('leadOverlay').addEventListener('click', (e)=>{ if(e.target === $('leadOverlay')) closeLeadOverlay(); });
+  $('closeLogin').addEventListener('click', closeLogin);
+  $('loginOverlay').addEventListener('click', (e)=>{ if(e.target === $('loginOverlay')) closeLogin(); });
+
+  $('leadForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const nome = $('nome').value.trim();
+    const telefone = $('telefone').value.trim();
+    const servico = $('servico').value;
+    const modelo = $('modelo').value.trim();
+    const quando = $('quando').value;
+    const origem = $('origem').value.trim() || 'Site PR Rodrigues Film';
+    const detalhes = $('detalhes').value.trim();
+    if(!nome || !telefone) return;
+
+    const especialista = chooseSpecialist();
+    const lead = {
+      id: uid(),
+      data: new Date().toISOString(),
+      nome, telefone, servico, modelo, quando, origem, detalhes,
+      atendente: especialista.nome,
+      status: 'Novo Lead',
+      valor: ''
+    };
+
+    addLead(lead);
+    closeLeadOverlay();
+    this.reset();
+    $('origem').value = 'Site PR Rodrigues Film';
+    openLoading(especialista.nome);
+
+    const msg = `Olá ${especialista.nome}! Me chamo ${nome}. Meu WhatsApp é ${telefone}. Quero orçamento de ${servico}${modelo ? ' para ' + modelo : ''}. ${detalhes ? 'Detalhes: ' + detalhes : ''}`;
+    const url = `https://wa.me/${especialista.numero}?text=${encodeURIComponent(msg)}`;
+
+    setTimeout(()=>{
+      window.open(url, '_blank');
+      closeLoading();
+    }, 900);
+  });
+
+  $('logoSecret').addEventListener('click', function(){
+    const now = Date.now();
+    if(now - lastClickTime > 1500) logoClicks = 0;
+    logoClicks += 1;
+    lastClickTime = now;
+    if(logoClicks >= 5){
+      logoClicks = 0;
+      openLogin();
+    }
+  });
+
+  $('loginBtn').addEventListener('click', function(){
+    if(($('crmPass').value || '') === (config.crmPassword || 'PR2026CRM')){
+      closeLogin();
+      toggleDashboard(true);
+    } else {
+      alert('Senha incorreta.');
+    }
+  });
+
+  $('saveConfig').addEventListener('click', function(){
+    config.webhook = $('webhookInput').value.trim();
+    config.metaMensal = Number($('metaInput').value || 0);
+    config.crmPassword = $('passwordInput').value.trim() || 'PR2026CRM';
+    saveConfigData(config);
+    renderDashboard();
+    alert('Configurações salvas.');
+  });
+
+  $('leadList').addEventListener('input', function(e){
+    const action = e.target.dataset.action;
+    const id = e.target.dataset.id;
+    if(!action || !id) return;
+    const lead = leads.find(l => l.id === id);
+    if(!lead) return;
+    if(action === 'status') lead.status = e.target.value;
+    if(action === 'valor') lead.valor = e.target.value;
+    if(action === 'atendente') lead.atendente = e.target.value;
+    persist();
+    renderDashboard();
+  });
+
+  $('leadList').addEventListener('click', function(e){
+    const action = e.target.dataset.action;
+    const id = e.target.dataset.id;
+    if(action === 'delete' && id){
+      if(confirm('Excluir este lead?')){
+        leads = leads.filter(l => l.id !== id);
+        persist();
+        renderDashboard();
+      }
+    }
+  });
+
+  $('btnExport').addEventListener('click', function(){
+    const blob = new Blob([JSON.stringify({ config, leads }, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'crm-pr-rodrigues-backup.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  $('importFile').addEventListener('change', function(){
+    const file = this.files && this.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        if(data.config) { config = { ...defaultConfig, ...data.config }; saveConfigData(config); }
+        if(Array.isArray(data.leads)) { leads = data.leads; persist(); }
+        renderDashboard();
+        alert('Backup importado com sucesso.');
+      } catch {
+        alert('Arquivo inválido.');
+      }
+      this.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  $('btnClearAll').addEventListener('click', function(){
+    if(confirm('Isso vai apagar todos os leads salvos neste navegador. Continuar?')){
+      leads = [];
+      persist();
+      renderDashboard();
+    }
+  });
+
+  // configuração inicial
+  renderDashboard();
+})();
+</script>
+</body>
+</html>
